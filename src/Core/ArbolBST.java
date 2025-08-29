@@ -82,7 +82,29 @@ public class ArbolBST {
         return actual;
     }
     
+    public void inOrden(Nodo actual) {
+        if (actual != null) {
+            inOrden(actual.getLi());
+            System.out.print(actual.getPoder() + " ");
+            inOrden(actual.getLd());
+        }
+    }
     
+    public void preOrden(Nodo actual) {
+        if (actual != null) {
+            System.out.print(actual.getPoder() + " ");
+            preOrden(actual.getLi());            
+            preOrden(actual.getLd());
+        }
+    }
+    
+    public void postOrden(Nodo actual) {
+        if (actual != null) {
+            postOrden(actual.getLi());            
+            postOrden(actual.getLd());
+            System.out.print(actual.getPoder() + " ");
+        }
+    }
     
     public Nodo encontrarSucesor(Nodo nodo) {
         Nodo sucesor = nodo.getLd();
