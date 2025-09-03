@@ -18,14 +18,15 @@ public class ArbolBST {
     public void insertarGema(Nodo gema, Nodo actual){
         if(this.raiz == null){
             this.raiz = gema;
-        }else if(gema.getPoder()> actual.getPoder() ){
+           }
+        else if(gema.getPoder()> actual.getPoder() ){
             if(actual.getLd() != null){
                 insertarGema(gema, actual.getLd());
             }else{
             actual.setLd(gema);}
         }else if(gema.getPoder()< actual.getPoder()){
-            if(actual.getLd() != null){
-                insertarGema(gema, actual.getLd());
+            if(actual.getLi() != null){
+                insertarGema(gema, actual.getLi());
             }else{
             actual.setLi(gema);}
         }else if(gema.getPoder()== actual.getPoder()){
@@ -115,7 +116,7 @@ public class ArbolBST {
     }
     
     public Nodo encontrarPredecesor(Nodo nodo) {
-        Nodo predecesor = nodo.getLd();
+        Nodo predecesor = nodo.getLi();
         while (predecesor.getLd() != null) {
             predecesor = predecesor.getLd();
         }
