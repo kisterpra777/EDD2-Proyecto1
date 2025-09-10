@@ -4,6 +4,9 @@
  */
 package Main;
 
+import Core.Juego;
+import View.Field;
+
 /**
  *
  * @author HOLA
@@ -11,7 +14,8 @@ package Main;
 public class Main {
     
     public static void main(String[] args) {
-        
+        Field field = new Field(new Juego());
+        field.setVisible(true);
         
         
     }

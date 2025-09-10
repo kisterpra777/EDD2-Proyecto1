@@ -4,6 +4,11 @@
  */
 package Core;
 
+import static Core.Juego.EnumEventos.COFRES;
+import static Core.Juego.EnumEventos.GEMA;
+import static Core.Juego.EnumEventos.JEFEENEMIGO;
+import static Core.Juego.EnumEventos.NADAXD;
+import static Core.Juego.EnumEventos.TRAMPA;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,9 +23,28 @@ public class Juego {
     }
 
     public enum EnumEventos {
-        JEFEENEMIGO, COFRES, PORTAL, TRAMPA
+        GEMA, JEFEENEMIGO, COFRES, PORTAL, TRAMPA, NADAXD
     }
 
+    public void llamadaEvento(){
+        EnumEventos evento;
+        float i = (float) Math.random();
+        
+        if(i<=0.3){
+           evento = GEMA;
+        }else if(i<=0.5){
+            evento = JEFEENEMIGO;
+        }else if(i<=0.6){
+            evento = COFRES;
+        }else if(i<=0.7){
+            evento = TRAMPA;
+        }else{
+            evento = NADAXD;
+        }
+        
+        ejecutarEvento(evento);  
+    }
+    
     public void ejecutarEvento(EnumEventos evento) {
         switch (evento) {
             case JEFEENEMIGO:
@@ -31,7 +55,8 @@ public class Juego {
                 abrirPortal();
             case TRAMPA:
                 trampa();
-
+            case NADAXD:
+                nada();
         }
     }
 
@@ -105,4 +130,11 @@ public class Juego {
 
     }
 
+    public void nada(){
+        System.out.println("No hay nada aquí, busca en otro lado :p");
+    }
+    
+    public void obtenerInventario(){
+        arbol.obtenerInventario();
+    }
 }
