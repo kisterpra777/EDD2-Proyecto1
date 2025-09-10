@@ -5,6 +5,7 @@
 package Core;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,8 +37,16 @@ public class ArbolBST {
                 actual.setLi(gema);
             }
         } else if (gema.getPoder() == actual.getPoder()) {
-            System.out.println("¡No puedes llevar 2 gemas del mismo poder!");
+            //System.out.println("¡No puedes llevar 2 gemas del mismo poder!");
+            JOptionPane.showMessageDialog(null,
+                    "¡No puedes llevar 2 gemas del mismo poder!",
+                    "Cuidado",
+                    JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    public Nodo getRaiz() {
+        return raiz;
     }
 
     public Nodo buscarRecursivo(Nodo actual, int clave) {
@@ -172,7 +181,7 @@ public class ArbolBST {
     return actual;
 }
 
-public Nodo encontrarMaximo() {
+    public Nodo encontrarMaximo() {
     Nodo actual = raiz;
     while (actual != null && actual.getLd() != null) {
         actual = actual.getLd();

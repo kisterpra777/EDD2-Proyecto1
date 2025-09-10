@@ -15,6 +15,8 @@ import javax.swing.JButton;
 public class Field extends javax.swing.JFrame {
 
     private final Juego juego;
+    private int i;
+    private int j;
 
     /**
      * Creates new form Field
@@ -22,12 +24,18 @@ public class Field extends javax.swing.JFrame {
     public Field(Juego juego) {
         initComponents();
         this.juego = juego;
+        i =1;
+        j =1;
+        
         for (Component comp : ButtonsField.getComponents()) {
             if (comp instanceof JButton boton) {
                 boton.addActionListener((evt) -> {
                     
-                    juego.llamadaEvento();
-                    
+                    juego.llamadaEvento(i*100, j*100);
+                    i+=1; j+=1;
+                    if(i<=6){
+                        i=1;
+                    }
                     ButtonsField.remove(boton);
                     //ButtonsField.revalidate();
                     ButtonsField.repaint();
@@ -432,7 +440,11 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        juego.ejecutarEvento(Juego.EnumEventos.PORTAL);
+        juego.ejecutarEvento(Juego.EnumEventos.PORTAL,1,1);
+        this.dispose();
+        
+        Field field = new Field(this.juego);
+        field.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -470,6 +482,7 @@ public class Field extends javax.swing.JFrame {
         });*/
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsField;
     private javax.swing.JPanel UtilityButtons;
