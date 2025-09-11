@@ -9,11 +9,12 @@ package Core;
  * @author samit
  */
 public class Nodo {
+
     int poder;
     String nombre;
     int coordX;
     int coordY;
-    
+
     Nodo Li;
     Nodo Ld;
     Nodo Lr;
@@ -27,12 +28,16 @@ public class Nodo {
 
     public void setLi(Nodo Li) {
         this.Li = Li;
-        Li.setLr(this);
+        if (Ld != null) {
+            Ld.setLr(this);
+        }
     }
 
     public void setLd(Nodo Ld) {
         this.Ld = Ld;
-        Ld.setLr(this);
+        if (Ld != null) {
+            Ld.setLr(this);
+        }
     }
 
     public void setLr(Nodo Lr) {
@@ -42,7 +47,7 @@ public class Nodo {
     public Nodo getLr() {
         return Lr;
     }
-    
+
     public int getPoder() {
         return poder;
     }
@@ -58,6 +63,5 @@ public class Nodo {
     public Nodo getLd() {
         return Ld;
     }
-    
-    
+
 }

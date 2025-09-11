@@ -5,8 +5,13 @@
 package View;
 
 import Core.Juego;
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  *
@@ -22,19 +27,21 @@ public class Field extends javax.swing.JFrame {
      * Creates new form Field
      */
     public Field(Juego juego) {
+        setBackGround();
         initComponents();
         this.juego = juego;
-        i =1;
-        j =1;
-        
+        i = 1;
+        j = 1;
+
         for (Component comp : ButtonsField.getComponents()) {
             if (comp instanceof JButton boton) {
                 boton.addActionListener((evt) -> {
-                    
-                    juego.llamadaEvento(i*100, j*100);
-                    i+=1; j+=1;
-                    if(i<=6){
-                        i=1;
+
+                    juego.llamadaEvento(i * 100, j * 100);
+                    i += 1;
+                    j += 1;
+                    if (i <= 6) {
+                        i = 1;
                     }
                     ButtonsField.remove(boton);
                     //ButtonsField.revalidate();
@@ -43,6 +50,22 @@ public class Field extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void setBackGround(){
+      // Sobrescribir el método paint para dibujar el fondo
+        JPanel MapGamePanel = new JPanel() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Cargar y dibujar la imagen
+                Image backgroundImage = new ImageIcon("src/Images/grass__r1209392301.png").getImage();
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        MapGamePanel.setLayout(new BorderLayout());
+        setContentPane(MapGamePanel);
+  } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,120 +109,144 @@ public class Field extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        ButtonsField.setBackground(new java.awt.Color(75, 145, 18));
+        ButtonsField.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        ButtonsField.setForeground(new java.awt.Color(102, 255, 102));
+
+        bprueba.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bpruebaActionPerformed(evt);
             }
         });
 
+        bprueba2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba2ActionPerformed(evt);
             }
         });
 
+        bprueba3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba3ActionPerformed(evt);
             }
         });
 
+        bprueba4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba4ActionPerformed(evt);
             }
         });
 
+        bprueba5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba5ActionPerformed(evt);
             }
         });
 
+        bprueba6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba6ActionPerformed(evt);
             }
         });
 
+        bprueba7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba7ActionPerformed(evt);
             }
         });
 
+        bprueba8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba8ActionPerformed(evt);
             }
         });
 
+        bprueba10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba10ActionPerformed(evt);
             }
         });
 
+        bprueba12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba12ActionPerformed(evt);
             }
         });
 
+        bprueba11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba11ActionPerformed(evt);
             }
         });
 
+        bprueba9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba9ActionPerformed(evt);
             }
         });
 
+        bprueba15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba15ActionPerformed(evt);
             }
         });
 
+        bprueba13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba13ActionPerformed(evt);
             }
         });
 
+        bprueba14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba14ActionPerformed(evt);
             }
         });
 
+        bprueba16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba16ActionPerformed(evt);
             }
         });
 
+        bprueba18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba18ActionPerformed(evt);
             }
         });
 
+        bprueba17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba17ActionPerformed(evt);
             }
         });
 
+        bprueba20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba20ActionPerformed(evt);
             }
         });
 
+        bprueba19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/8d0b7f6bdbddade9fddf851a31a1004d (2).jpg"))); // NOI18N
         bprueba19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bprueba19ActionPerformed(evt);
@@ -293,6 +340,9 @@ public class Field extends javax.swing.JFrame {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        UtilityButtons.setBackground(new java.awt.Color(75, 145, 18));
+        UtilityButtons.setBorder(new javax.swing.border.MatteBorder(null));
+
         jButton1.setText("Mostrar Inventario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,7 +375,7 @@ public class Field extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(61, 61, 61)
                 .addComponent(jButton2)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,7 +387,7 @@ public class Field extends javax.swing.JFrame {
                 .addComponent(ButtonsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(UtilityButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +397,7 @@ public class Field extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addComponent(ButtonsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(105, 105, 105)
                         .addComponent(UtilityButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -386,10 +436,6 @@ public class Field extends javax.swing.JFrame {
     private void bprueba8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bprueba8ActionPerformed
-
-    private void bprueba9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bprueba9ActionPerformed
 
     private void bprueba10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba10ActionPerformed
         // TODO add your handling code here:
@@ -440,12 +486,17 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        juego.ejecutarEvento(Juego.EnumEventos.PORTAL,1,1);
-        this.dispose();
-        
-        Field field = new Field(this.juego);
-        field.setVisible(true);
+        boolean abierto = juego.abrirPortal();
+        if (abierto) {
+            this.dispose();
+            Field field = new Field(this.juego);
+            field.setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void bprueba9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bprueba9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -475,14 +526,14 @@ public class Field extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-     /*   java.awt.EventQueue.invokeLater(new Runnable() {
+ /*   java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Field().setVisible(true);
             }
         });*/
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsField;
     private javax.swing.JPanel UtilityButtons;

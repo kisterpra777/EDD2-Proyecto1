@@ -21,6 +21,10 @@ public class ArbolBST {
         this.inventario = new ArrayList<>();
     }
 
+    public void eliminar(int clave) {
+        this.raiz = eliminarRecursivo(this.raiz, clave);
+    }
+
     public void insertarGema(Nodo gema, Nodo actual) {
         if (this.raiz == null) {
             this.raiz = gema;
@@ -97,11 +101,12 @@ public class ArbolBST {
     }
 
     public ArrayList obtenerInventario() {
+        inventario.clear();
         ObtenerinOrden(raiz);
         return this.inventario;
     }
-    
-    public ArrayList<Nodo> listaInventario(Nodo actual){
+
+    public ArrayList<Nodo> listaInventario(Nodo actual) {
         if (actual != null) {
             inventario.clear();
             ObtenerinOrden(actual.getLi());
@@ -113,7 +118,6 @@ public class ArbolBST {
 
     public void ObtenerinOrden(Nodo actual) {
         if (actual != null) {
-            inventario.clear();
             ObtenerinOrden(actual.getLi());
             this.inventario.add(actual);
             ObtenerinOrden(actual.getLd());
@@ -182,20 +186,20 @@ public class ArbolBST {
 
         return predecesor;
     }
-    
+
     public Nodo encontrarMinimo() {
-    Nodo actual = raiz;
-    while (actual != null && actual.getLi() != null) {
-        actual = actual.getLi();
+        Nodo actual = raiz;
+        while (actual != null && actual.getLi() != null) {
+            actual = actual.getLi();
+        }
+        return actual;
     }
-    return actual;
-}
 
     public Nodo encontrarMaximo() {
-    Nodo actual = raiz;
-    while (actual != null && actual.getLd() != null) {
-        actual = actual.getLd();
+        Nodo actual = raiz;
+        while (actual != null && actual.getLd() != null) {
+            actual = actual.getLd();
+        }
+        return actual;
     }
-    return actual;
-}
 }

@@ -149,7 +149,7 @@ public class Juego {
                     "El jefe recibe la gema exacta: " + gemaBuscada.getNombre(),
                     "Cuidado",
                     JOptionPane.WARNING_MESSAGE);
-            arbol.eliminarRecursivo(gemaBuscada, gemaBuscada.getPoder());
+            arbol.eliminar(gemaBuscada.getPoder());
             return gemaBuscada;
 
         } else {
@@ -163,7 +163,7 @@ public class Juego {
                         "No está la gema exacta. Se entrega el sucesor: " + sucesor.getNombre(),
                         "Entrega",
                         JOptionPane.INFORMATION_MESSAGE);
-                arbol.eliminarRecursivo(sucesor, sucesor.getPoder());
+                arbol.eliminar(sucesor.getPoder());
                 return sucesor;
             } else if (predecesor != null) {
                 //System.out.println("No está la gema exacta. Se entrega el predecesor: " + predecesor.getNombre());
@@ -171,7 +171,7 @@ public class Juego {
                         "No está la gema exacta. Se entrega el predecesor: " + predecesor.getNombre(),
                         "Entrega",
                         JOptionPane.INFORMATION_MESSAGE);
-                arbol.eliminarRecursivo(predecesor, predecesor.getPoder());
+                arbol.eliminar(predecesor.getPoder());
                 return predecesor;
             } else {
                 //System.out.println("No hay gemas para entregar.");
@@ -201,11 +201,11 @@ public class Juego {
                     "Cofre",
                     JOptionPane.WARNING_MESSAGE);
         }
-        arbol.eliminarRecursivo(minimo, minimo.getPoder());
+        arbol.eliminar(minimo.getPoder());
 
     }
 
-    public void abrirPortal() {
+    public boolean abrirPortal() {
 
         Nodo maximo = arbol.encontrarMaximo();
         if (maximo != null) {
@@ -214,14 +214,21 @@ public class Juego {
                     "El portal se abre con la gema maxima: " + maximo.getNombre(),
                     "Portal",
                     JOptionPane.INFORMATION_MESSAGE);
+                    arbol.eliminar(maximo.getPoder());
+                    return true;
+            
+                    
         } else {
             //System.out.println("El portal no se puede abrir. No hay gemas.");
             JOptionPane.showMessageDialog(null,
                     "El portal no se puede abrir. No hay gemas.",
                     "Portal",
                     JOptionPane.WARNING_MESSAGE);
+            return false;
         }
-        arbol.eliminarRecursivo(maximo, maximo.getPoder());
+        
+       
+        
 
     }
 
@@ -239,7 +246,7 @@ public class Juego {
         ArrayList<Nodo> inventario = this.arbol.obtenerInventario();
         int index = random.nextInt(inventario.size());
         Nodo gemaAEliminar = inventario.get(index);
-        arbol.eliminarRecursivo(gemaAEliminar, gemaAEliminar.getPoder());
+        arbol.eliminar(gemaAEliminar.getPoder());
         //System.out.println("El jugador cayó en una trampa y perdió la gema: " + gemaAEliminar.getNombre());
         JOptionPane.showMessageDialog(null,
                 "El jugador cayó en una trampa y perdió la gema: " + gemaAEliminar.getNombre(),
