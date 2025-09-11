@@ -5,6 +5,8 @@
 package View;
 
 import Core.Juego;
+import Core.Nodo;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,7 +20,19 @@ public class Inventory extends javax.swing.JFrame {
     private Juego juego;
     public Inventory(Juego juego) {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
+
+        // Limpiar filas existentes (opcional, si no quieres conservar las que pusiste en NetBeans)
+        modelo.setRowCount(0);
+
+        // Llenar la tabla con la lista recibida
         
+        for (Nodo nodo : juego.obtenerInventario()) {
+            modelo.addRow(new Object[]{
+                nodo.(),
+                nodo.getAutor()
+            });
+        }
     }
 
     /**
@@ -111,7 +125,7 @@ public class Inventory extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inventory().setVisible(true);
+               // new Inventory().setVisible(true);
             }
         });
     }

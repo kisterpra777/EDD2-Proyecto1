@@ -100,6 +100,16 @@ public class ArbolBST {
         ObtenerinOrden(raiz);
         return this.inventario;
     }
+    
+    public ArrayList<Nodo> listaInventario(Nodo actual){
+        if (actual != null) {
+            inventario.clear();
+            ObtenerinOrden(actual.getLi());
+            this.inventario.add(actual);
+            ObtenerinOrden(actual.getLd());
+        }
+        return null;
+    }
 
     public void ObtenerinOrden(Nodo actual) {
         if (actual != null) {

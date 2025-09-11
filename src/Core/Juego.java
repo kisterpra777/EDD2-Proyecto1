@@ -32,9 +32,12 @@ public class Juego {
         ALTOS("altos"),
         RUINA("ruina"),
         SENDERO("sendero"),
-        Pueblo("pueblo"),
-        Arroyo("arroyo"),
-        Rio("río");
+        PUEBLO("pueblo"),
+        ARROYO("arroyo"),
+        RIO("río"),
+        TABERNA("taberna"),
+        PUENTE("puente"),
+        INFIERNO("infierno");
 
         private final String nombre;
 
@@ -51,9 +54,12 @@ public class Juego {
         SOLEDAD("Soledad 2k"),
         MALAMBO("Malambo city"),
         MIXWELL("Masgüel"),
-        OSTELMAR("Ostelmar"),
+        MAURO("Puerto de Mauri"),
         CELESTIA("Celestia"),
-        VERONETH("Veroneth");
+        REBOLO("Rebolo town"),
+        COORDIALIDAD("la Coordialidad"),
+        MOCHA("Mocha city"),
+        J("Bloque J");
 
         private final String nombre;
 
