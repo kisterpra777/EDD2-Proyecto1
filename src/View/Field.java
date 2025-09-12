@@ -29,6 +29,7 @@ public class Field extends javax.swing.JFrame {
     public Field(Juego juego) {
         setBackGround();
         initComponents();
+        setLocationRelativeTo(null);
         this.juego = juego;
         i = 1;
         j = 1;
@@ -483,6 +484,8 @@ public class Field extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         juego.obtenerInventario();
+        Inventory inventario = new Inventory(this.juego);
+            inventario.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -37,6 +37,7 @@ public class Juego {
         RIO("río"),
         TABERNA("taberna"),
         PUENTE("puente"),
+        PUERTO("puerto"),
         INFIERNO("infierno");
 
         private final String nombre;
@@ -54,7 +55,7 @@ public class Juego {
         SOLEDAD("Soledad 2k"),
         MALAMBO("Malambo city"),
         MIXWELL("Masgüel"),
-        MAURO("Puerto de Mauri"),
+        MAURO("Mauri"),
         CELESTIA("Celestia"),
         REBOLO("Rebolo town"),
         COORDIALIDAD("la Coordialidad"),
@@ -76,7 +77,7 @@ public class Juego {
         EnumEventos evento;
         float i = (float) Math.random();
 
-        if (arbol.getRaiz() != null) {
+       
             if (i <= 0.3) {
                 evento = GEMA;
             } else if (i <= 0.6) {
@@ -88,14 +89,7 @@ public class Juego {
             } else {
                 evento = TRAMPA;
             }
-        } else {
-            
-            if (i <= 0.5) {
-                evento = GEMA;
-            } else {
-                evento = NADAXD;
-            }
-        }
+       
 
         ejecutarEvento(evento, posX, posY);
     }
@@ -160,24 +154,24 @@ public class Juego {
             if (sucesor != null) {
                 //System.out.println("No está la gema exacta. Se entrega el sucesor: " + sucesor.getNombre());
                 JOptionPane.showMessageDialog(null,
-                        "No está la gema exacta. Se entrega el sucesor: " + sucesor.getNombre(),
-                        "Entrega",
+                        "El jefe espera la gema con poder "+ gemaPedir +". Se entrega el sucesor: " + sucesor.getNombre(),
+                        "Jefe",
                         JOptionPane.INFORMATION_MESSAGE);
                 arbol.eliminar(sucesor.getPoder());
                 return sucesor;
             } else if (predecesor != null) {
                 //System.out.println("No está la gema exacta. Se entrega el predecesor: " + predecesor.getNombre());
                 JOptionPane.showMessageDialog(null,
-                        "No está la gema exacta. Se entrega el predecesor: " + predecesor.getNombre(),
-                        "Entrega",
+                        "El jefe espera la gema con poder "+ gemaPedir +" Se entrega el predecesor: " + predecesor.getNombre(),
+                        "Jefe",
                         JOptionPane.INFORMATION_MESSAGE);
                 arbol.eliminar(predecesor.getPoder());
                 return predecesor;
             } else {
                 //System.out.println("No hay gemas para entregar.");
                 JOptionPane.showMessageDialog(null,
-                        "No hay gemas para entregar.",
-                        "Entrega",
+                        "No hay gemas que entregar al jefe.",
+                        "Jefe",
                         JOptionPane.WARNING_MESSAGE);
                 return null; // El árbol está vacío
             }
@@ -263,7 +257,7 @@ public class Juego {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void obtenerInventario() {
-        arbol.obtenerInventario();
+    public ArrayList<Nodo> obtenerInventario() {
+        return arbol.obtenerInventario();
     }
 }
