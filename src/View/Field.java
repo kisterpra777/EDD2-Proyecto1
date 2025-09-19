@@ -5,12 +5,14 @@
 package View;
 
 import Core.Juego;
+import Resources.MusicaFondo;
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -22,6 +24,12 @@ public class Field extends javax.swing.JFrame {
     private final Juego juego;
     private int i;
     private int j;
+    private JLabel jugador;
+    private int movimientosRestantes = 0;
+    private JButton posicionActual; // el botón donde está el jugador
+    private JButton[][] grid;
+    MusicaFondo musicaJuego = new MusicaFondo();
+
 
     /**
      * Creates new form Field
@@ -29,31 +37,26 @@ public class Field extends javax.swing.JFrame {
     public Field(Juego juego) {
         setBackGround();
         initComponents();
+        musicaJuego.reproducir("src/Resources/fondo.wav");
+        inicializarGrid();
+
+        // Crear el PNG del jugador
+        jugador = new JLabel(new ImageIcon("src/Images/player.png"));
+        jugador.setSize(60, 60); // mismo tamaño que los botones
+        jugador.setVisible(true);
+        jugador.setFocusable(false);
+
+        colocarJugadorEn(grid[0][0]);
+
         setLocationRelativeTo(null);
         this.juego = juego;
         i = 1;
         j = 1;
 
-        for (Component comp : ButtonsField.getComponents()) {
-            if (comp instanceof JButton boton) {
-                boton.addActionListener((evt) -> {
-
-                    juego.llamadaEvento(i * 100, j * 100);
-                    i += 1;
-                    j += 1;
-                    if (i <= 6) {
-                        i = 1;
-                    }
-                    ButtonsField.remove(boton);
-                    //ButtonsField.revalidate();
-                    ButtonsField.repaint();
-                });
-            }
-        }
     }
-    
-    private void setBackGround(){
-      // Sobrescribir el método paint para dibujar el fondo
+
+    private void setBackGround() {
+        // Sobrescribir el método paint para dibujar el fondo
         JPanel MapGamePanel = new JPanel() {
 
             @Override
@@ -66,7 +69,136 @@ public class Field extends javax.swing.JFrame {
         };
         MapGamePanel.setLayout(new BorderLayout());
         setContentPane(MapGamePanel);
-  } 
+    }
+
+    private void inicializarGrid() {
+        grid = new JButton[4][5]; // 4 filas, 5 columnas
+        grid[0][0] = bprueba;
+        grid[0][1] = bprueba5;
+        grid[0][2] = bprueba9;
+        grid[0][3] = bprueba13;
+        grid[0][4] = bprueba17;
+
+        grid[1][0] = bprueba4;
+        grid[1][1] = bprueba6;
+        grid[1][2] = bprueba10;
+        grid[1][3] = bprueba14;
+        grid[1][4] = bprueba18;
+
+        grid[2][0] = bprueba2;
+        grid[2][1] = bprueba7;
+        grid[2][2] = bprueba11;
+        grid[2][3] = bprueba15;
+        grid[2][4] = bprueba19;
+
+        grid[3][0] = bprueba3;
+        grid[3][1] = bprueba8;
+        grid[3][2] = bprueba12;
+        grid[3][3] = bprueba16;
+        grid[3][4] = bprueba20;
+
+    }
+
+    private void tirarDado() {
+        movimientosRestantes = 1 + (int) (Math.random() * 6);
+        System.out.println("Movimientos disponibles: " + movimientosRestantes);
+    }
+
+    private void colocarJugadorEn(JButton boton) {
+        // Si el jugador estaba en otro botón, lo quitamos de ese botón
+        if (jugador.getParent() != null) {
+            Container parent = jugador.getParent();
+            parent.remove(jugador);
+            parent.revalidate();
+            parent.repaint();
+        }
+
+        // Añadimos el jugador al nuevo botón
+        boton.setLayout(new BorderLayout());
+        boton.add(jugador, BorderLayout.CENTER);
+
+        boton.revalidate();
+        boton.repaint();
+
+        // Actualizamos la posición actual
+        posicionActual = boton;
+    }
+
+    private boolean esVecino(JButton nuevo, JButton actual) {
+        int filaActual = -1, colActual = -1;
+        int filaNuevo = -1, colNuevo = -1;
+
+        for (int f = 0; f < grid.length; f++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                if (grid[f][c] == actual) {
+                    filaActual = f;
+                    colActual = c;
+                }
+                if (grid[f][c] == nuevo) {
+                    filaNuevo = f;
+                    colNuevo = c;
+                }
+
+            }
+
+        }
+
+        System.out.println("Actual: (" + filaActual + "," + colActual
+                + ") -> Nuevo: (" + filaNuevo + "," + colNuevo + ")");
+
+        if (filaActual == -1 || filaNuevo == -1) {
+            return false;
+        }
+
+        int difFila = Math.abs(filaNuevo - filaActual);
+        int difCol = Math.abs(colNuevo - colActual);
+
+        return (difFila + difCol == 1);
+    }
+
+    private void moverJugador(JButton botonDestino) {
+        movimientosRestantes = 1;
+
+        if (movimientosRestantes > 0 && esVecino(botonDestino, posicionActual)) {
+            colocarJugadorEn(botonDestino);
+            movimientosRestantes--;
+            System.out.println("Movimientos restantes: " + movimientosRestantes);
+
+            // Obtener indices del grid para pasar coordenadas al juego
+            int[] pos = getGridPosition(botonDestino);
+            int fila = pos[0];
+            int col = pos[1];
+
+            if (fila != -1 && col != -1) {
+                int coordX = col * 100;
+                int coordY = fila * 100;
+
+                // Llamada al juego: dispara evento en esa casilla
+                juego.llamadaEvento(coordX, coordY);
+
+                // Marcar la casilla como "consumida" para que no vuelva a activarse:
+                //  - opcion A: deshabilitar el boton (sigue estando en grid)
+                botonDestino.setEnabled(false);
+            } else {
+                System.err.println("No se encontró la posición del botón en la malla (grid).");
+            }
+
+        } else {
+            System.out.println("No puedes moverte a esa casilla");
+        }
+
+    }
+
+    private int[] getGridPosition(JButton boton) {
+        for (int f = 0; f < grid.length; f++) {
+            for (int c = 0; c < grid[0].length; c++) {
+                if (grid[f][c] == boton) {
+                    return new int[]{f, c};
+                }
+            }
+        }
+        return new int[]{-1, -1};
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -407,85 +539,86 @@ public class Field extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bpruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpruebaActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba);
+
     }//GEN-LAST:event_bpruebaActionPerformed
 
     private void bprueba2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba2ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba2);
     }//GEN-LAST:event_bprueba2ActionPerformed
 
     private void bprueba3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba3ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba3);
     }//GEN-LAST:event_bprueba3ActionPerformed
 
     private void bprueba4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba4ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba4);
     }//GEN-LAST:event_bprueba4ActionPerformed
 
     private void bprueba5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba5ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba5);
     }//GEN-LAST:event_bprueba5ActionPerformed
 
     private void bprueba6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba6ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba6);
     }//GEN-LAST:event_bprueba6ActionPerformed
 
     private void bprueba7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba7ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba7);
     }//GEN-LAST:event_bprueba7ActionPerformed
 
     private void bprueba8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba8ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba8);
     }//GEN-LAST:event_bprueba8ActionPerformed
 
     private void bprueba10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba10ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba10);
     }//GEN-LAST:event_bprueba10ActionPerformed
 
     private void bprueba11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba11ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba11);
     }//GEN-LAST:event_bprueba11ActionPerformed
 
     private void bprueba12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba12ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba12);
     }//GEN-LAST:event_bprueba12ActionPerformed
 
     private void bprueba13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba13ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba13);
     }//GEN-LAST:event_bprueba13ActionPerformed
 
     private void bprueba14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba14ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba14);
     }//GEN-LAST:event_bprueba14ActionPerformed
 
     private void bprueba15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba15ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba15);
     }//GEN-LAST:event_bprueba15ActionPerformed
 
     private void bprueba16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba16ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba16);
     }//GEN-LAST:event_bprueba16ActionPerformed
 
     private void bprueba17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba17ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba17);
     }//GEN-LAST:event_bprueba17ActionPerformed
 
     private void bprueba18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba18ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba18);
     }//GEN-LAST:event_bprueba18ActionPerformed
 
     private void bprueba19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba19ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba19);
     }//GEN-LAST:event_bprueba19ActionPerformed
 
     private void bprueba20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba20ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba20);
     }//GEN-LAST:event_bprueba20ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         juego.obtenerInventario();
         Inventory inventario = new Inventory(this.juego);
-            inventario.setVisible(true);
+        inventario.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -498,7 +631,7 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void bprueba9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprueba9ActionPerformed
-        // TODO add your handling code here:
+        moverJugador(bprueba9);
     }//GEN-LAST:event_bprueba9ActionPerformed
 
     /**
@@ -515,16 +648,24 @@ public class Field extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Field.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Field.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Field.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Field.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Field.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Field.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Field.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Field.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
