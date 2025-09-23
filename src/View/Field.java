@@ -5,6 +5,7 @@
 package View;
 
 import Core.Juego;
+import Core.Nodo;
 import Resources.MusicaFondo;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -29,7 +30,6 @@ public class Field extends javax.swing.JFrame {
     private JButton posicionActual; // el botón donde está el jugador
     private JButton[][] grid;
     MusicaFondo musicaJuego = new MusicaFondo();
-
 
     /**
      * Creates new form Field
@@ -174,8 +174,12 @@ public class Field extends javax.swing.JFrame {
                 int coordY = fila * 100;
 
                 // Llamada al juego: dispara evento en esa casilla
-                juego.llamadaEvento(coordX, coordY);
-
+                Nodo nodo = juego.llamadaEvento(coordX, coordY);
+                if (nodo == null) {
+                    GameOver GO = new GameOver();
+                    GO.setVisible(true);
+                    dispose();
+                }
                 // Marcar la casilla como "consumida" para que no vuelva a activarse:
                 //  - opcion A: deshabilitar el boton (sigue estando en grid)
                 botonDestino.setEnabled(false);
@@ -622,8 +626,8 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        boolean abierto = juego.abrirPortal();
-        if (abierto) {
+        Nodo abierto = juego.abrirPortal();
+        if (abierto != null) {
             this.dispose();
             Field field = new Field(this.juego);
             field.setVisible(true);

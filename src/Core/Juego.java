@@ -74,7 +74,7 @@ import Resources.Sonido;
             }
         }
 
-        public void llamadaEvento(int posX, int posY) {
+        public Nodo llamadaEvento(int posX, int posY) {
             EnumEventos evento;
             float i = (float) Math.random();
 
@@ -92,33 +92,30 @@ import Resources.Sonido;
                 }
 
 
-            ejecutarEvento(evento, posX, posY);
+            return ejecutarEvento(evento, posX, posY);
+            
         }
 
-        public void ejecutarEvento(EnumEventos evento, int posX, int posY) {
+        public Nodo ejecutarEvento(EnumEventos evento, int posX, int posY) {
             switch (evento) {
                 case GEMA:
-                    gema(posX,posY);
-                    break;
+                    return gema(posX,posY);
                 case JEFEENEMIGO:
-                    jefeEnemigo(random.nextInt(100));
-                    break;
+                    return jefeEnemigo(random.nextInt(100));
                 case COFRES:
-                    cofre();
-                    break;
+                    return cofre();
                 case PORTAL:
-                    abrirPortal();
-                    break;
+                    return abrirPortal();
                 case TRAMPA:
-                    trampa();
-                    break;
+                    return trampa();
                 case NADAXD:
-                    nada();
-                    break;
+                    return nada();
+                    
             }
+            return null;
         }
 
-        public void gema(int posX,int posY) {
+        public Nodo gema(int posX,int posY) {
             NombreLugar[] nombresLugar = NombreLugar.values();
             Lugar[] lugar = Lugar.values();
             int i = random.nextInt(nombresLugar.length);
@@ -129,12 +126,11 @@ import Resources.Sonido;
                     "Gema encontrada",
                     JOptionPane.INFORMATION_MESSAGE);
                     
-
-            arbol.insertarGema(new Nodo(random.nextInt(100),
+            Nodo nuevaGema =new Nodo(random.nextInt(100),
                     "Gema de " + lugar[j].getNombre() + " de " + nombresLugar[i].getNombre(),
-                    posX+i*10, posY+j*10),
-                    arbol.getRaiz());
-
+                    posX+i*10, posY+j*10) ;
+            arbol.insertarGema(nuevaGema,arbol.getRaiz());
+            return nuevaGema;
         }
 
         public Nodo jefeEnemigo(int gemaPedir) {
@@ -178,6 +174,7 @@ import Resources.Sonido;
                             "Jefe",
                             JOptionPane.WARNING_MESSAGE);
                             Sonido.reproducir("src/Resources/GameOver.wav");
+                            
                     return null; // El árbol está vacío
                 }
                 
@@ -185,7 +182,7 @@ import Resources.Sonido;
 
         }
 
-        public void cofre() {
+        public Nodo cofre() {
             
 
             Nodo minimo = arbol.encontrarMinimo();
@@ -204,11 +201,11 @@ import Resources.Sonido;
                         JOptionPane.WARNING_MESSAGE);
                        
             }
-            
+            return minimo;
 
         }
 
-        public boolean abrirPortal() {
+        public Nodo abrirPortal() {
 
             Nodo maximo = arbol.encontrarMaximo();
             if (maximo != null) {
@@ -218,7 +215,7 @@ import Resources.Sonido;
                         "Portal",
                         JOptionPane.INFORMATION_MESSAGE);
                         arbol.eliminar(maximo.getPoder());
-                        return true;
+                       // return true;
 
 
             } else {
@@ -227,15 +224,15 @@ import Resources.Sonido;
                         "El portal no se puede abrir. No hay gemas.",
                         "Portal",
                         JOptionPane.WARNING_MESSAGE);
-                return false;
+              //  return false;
             }
-
+            return maximo;
 
 
 
         }
 
-        public void trampa() {
+        public Nodo trampa() {
 
             if (arbol.raiz == null) {                
                 Sonido.reproducir("src/Resources/GameOver.wav");
@@ -243,7 +240,7 @@ import Resources.Sonido;
                         "No hay gemas que perder.",
                         "Trampa",
                         JOptionPane.WARNING_MESSAGE);
-                return;
+                return null;
             }
 
             ArrayList<Nodo> inventario = this.arbol.obtenerInventario();
@@ -255,15 +252,18 @@ import Resources.Sonido;
                     "El jugador cayó en una trampa y perdió la gema: " + gemaAEliminar.getNombre(),
                     "Trampa",
                     JOptionPane.WARNING_MESSAGE);
-
+            return gemaAEliminar;
         }
 
-        public void nada() {
+        public Nodo nada() {
             Sonido.reproducir("src/Resources/nada.wav");
             JOptionPane.showMessageDialog(null,
                     "No hay nada aquí, busca en otro lado :p",
                     "No pasó nada",
                     JOptionPane.INFORMATION_MESSAGE);
+            return new Nodo(0,
+                    "gema vacia",
+                    0,0) ;
         }
 
         public ArrayList<Nodo> obtenerInventario() {
