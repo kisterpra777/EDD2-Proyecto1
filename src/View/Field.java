@@ -179,6 +179,7 @@ public class Field extends javax.swing.JFrame {
                     GameOver GO = new GameOver();
                     GO.setVisible(true);
                     dispose();
+                    musicaJuego.detener();
                 }
                 // Marcar la casilla como "consumida" para que no vuelva a activarse:
                 //  - opcion A: deshabilitar el boton (sigue estando en grid)
@@ -629,6 +630,7 @@ public class Field extends javax.swing.JFrame {
         Nodo abierto = juego.abrirPortal();
         if (abierto != null) {
             this.dispose();
+            musicaJuego.detener();
             Field field = new Field(this.juego);
             field.setVisible(true);
         }
