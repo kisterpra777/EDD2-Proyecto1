@@ -127,11 +127,6 @@ public class Field extends javax.swing.JFrame {
 
     }
 
-    private void tirarDado() {
-        movimientosRestantes = 1 + (int) (Math.random() * 6);
-        System.out.println("Movimientos disponibles: " + movimientosRestantes);
-    }
-
     private void colocarJugadorEn(JButton boton) {
         // Si el jugador estaba en otro botón, lo quitamos de ese botón
         if (jugador.getParent() != null) {
@@ -179,6 +174,7 @@ public class Field extends javax.swing.JFrame {
             return false;
         }
 
+        
         int difFila = Math.abs(filaNuevo - filaActual);
         int difCol = Math.abs(colNuevo - colActual);
 
@@ -216,7 +212,7 @@ public class Field extends javax.swing.JFrame {
                     casillasVisitadas.add(botonDestino);
 
                     // quitar el icono como indicador visual
-                    botonDestino.setIcon(null);
+                    botonDestino.setEnabled(false);
                 }
             } else {
                 System.err.println("No se encontró la posición del botón en la malla (grid).");
@@ -277,6 +273,7 @@ public class Field extends javax.swing.JFrame {
         UtilityButtons = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -536,29 +533,38 @@ public class Field extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnreintentar[1].png"))); // NOI18N
+        jButton3.setToolTipText("");
+        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout UtilityButtonsLayout = new javax.swing.GroupLayout(UtilityButtons);
         UtilityButtons.setLayout(UtilityButtonsLayout);
         UtilityButtonsLayout.setHorizontalGroup(
             UtilityButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UtilityButtonsLayout.createSequentialGroup()
-                .addGroup(UtilityButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(UtilityButtonsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, UtilityButtonsLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(70, 70, 70)
+                .addGroup(UtilityButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(UtilityButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         UtilityButtonsLayout.setVerticalGroup(
             UtilityButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UtilityButtonsLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(9, 9, 9))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -570,7 +576,7 @@ public class Field extends javax.swing.JFrame {
                 .addComponent(ButtonsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(UtilityButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -695,6 +701,12 @@ public class Field extends javax.swing.JFrame {
         inventario.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Field field = new Field(new Juego());
+        field.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -764,6 +776,7 @@ public class Field extends javax.swing.JFrame {
     private javax.swing.JButton bprueba9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables

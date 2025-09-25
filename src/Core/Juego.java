@@ -85,15 +85,21 @@ public class Juego {
 
         if (primerMovimiento) {
             // En el primer movimiento, forzar evento seguro
-            if (i <= 0.5) {
+            if (i <= 0.35) {
                 evento = GEMA;
-            } else {
+            } else if (i <= 0.6) {
                 evento = NADAXD;
+            } else if (i <= 0.8) {
+                evento = JEFEENEMIGO;
+            } else if (i <= 0.9) {
+                evento = COFRES;
+            } else {
+                evento = TRAMPA;
             }
             primerMovimiento = false; // después de este ya puede tocar todo
         } else {
             // Probabilidades normales
-            if (i <= 0.4) {
+            if (i <= 0.35) {
                 evento = GEMA;
             } else if (i <= 0.6) {
                 evento = NADAXD;
