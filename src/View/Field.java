@@ -31,6 +31,7 @@ public class Field extends javax.swing.JFrame {
     private JButton posicionActual; // el botón donde está el jugador
     private JButton[][] grid;
     MusicaFondo musicaJuego = new MusicaFondo();
+    private int portales;
 
     /**
      * Creates new form Field
@@ -53,6 +54,28 @@ public class Field extends javax.swing.JFrame {
         this.juego = juego;
         i = 1;
         j = 1;
+        portales = 0;
+
+    }
+    public Field(Juego juego, int portales) {
+        setBackGround();
+        initComponents();
+        musicaJuego.reproducir("src/Resources/fondo.wav");
+        inicializarGrid();
+
+        // Crear el PNG del jugador
+        jugador = new JLabel(new ImageIcon("src/Images/player.png"));
+        jugador.setSize(60, 60); // mismo tamaño que los botones
+        jugador.setVisible(true);
+        jugador.setFocusable(false);
+
+        colocarJugadorEn(grid[0][0]);
+
+        setLocationRelativeTo(null);
+        this.juego = juego;
+        i = 1;
+        j = 1;
+        this.portales = portales;
 
     }
 
@@ -191,9 +214,9 @@ public class Field extends javax.swing.JFrame {
 
         } else {
             JOptionPane.showMessageDialog(null,
-                            "No te puedes mover a esta casilla.",
-                            "Movimiento",
-                            JOptionPane.WARNING_MESSAGE);
+                    "No te puedes mover a esta casilla.",
+                    "Movimiento",
+                    JOptionPane.WARNING_MESSAGE);
         }
 
     }
@@ -634,10 +657,18 @@ public class Field extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Nodo abierto = juego.abrirPortal();
         if (abierto != null) {
+            
+            System.out.println("portales: "+portales);
             this.dispose();
-            musicaJuego.detener();
-            Field field = new Field(this.juego);
-            field.setVisible(true);
+            if (portales < 2) {
+                musicaJuego.detener();
+                Field field = new Field(this.juego, portales+1);
+                field.setVisible(true);
+            }else{
+                dispose();
+                Congratulations congrats = new Congratulations();
+                congrats.setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

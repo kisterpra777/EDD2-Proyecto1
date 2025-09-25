@@ -78,8 +78,8 @@ import Resources.Sonido;
             EnumEventos evento;
             float i = (float) Math.random();
 
-
-                if (i <= 0.3) {
+                //0.3
+                if (i <= 99) {
                     evento = GEMA;
                 } else if (i <= 0.6) {
                     evento = NADAXD;
