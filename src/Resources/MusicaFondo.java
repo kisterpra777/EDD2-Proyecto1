@@ -6,7 +6,7 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MusicaFondo {
+public  class MusicaFondo {
     private Clip clip;
 
     public void reproducir(String ruta) {

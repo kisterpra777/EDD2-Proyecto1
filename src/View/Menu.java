@@ -23,6 +23,8 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         setBackGround();
         initComponents();
+        setLocationRelativeTo(null);
+
         
     }
 

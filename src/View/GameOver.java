@@ -23,7 +23,7 @@ public class GameOver extends javax.swing.JFrame {
     public GameOver() {
         setBackGround();
         initComponents();
-        
+        setLocationRelativeTo(null);
     }
 
     

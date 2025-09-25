@@ -668,6 +668,8 @@ public class Field extends javax.swing.JFrame {
                 dispose();
                 Congratulations congrats = new Congratulations();
                 congrats.setVisible(true);
+                musicaJuego.detener();
+                musicaJuego.reproducir("src/resources/winMusic");
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed

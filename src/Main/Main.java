@@ -19,6 +19,7 @@ public class Main {
         field.setVisible(true);*/
         Menu menu = new Menu();
         menu.setVisible(true);
+
         
         
     }

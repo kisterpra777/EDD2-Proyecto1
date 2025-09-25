@@ -78,8 +78,8 @@ import Resources.Sonido;
             EnumEventos evento;
             float i = (float) Math.random();
 
-                //0.3
-                if (i <= 99) {
+                
+                if (i <= 0.35) {
                     evento = GEMA;
                 } else if (i <= 0.6) {
                     evento = NADAXD;
@@ -209,7 +209,7 @@ import Resources.Sonido;
 
             Nodo maximo = arbol.encontrarMaximo();
             if (maximo != null) {
-                //System.out.println("El portal se abre con la gema maxima: " + maximo.getNombre());
+                Sonido.reproducir("src/Resources/Portal-sound-design.wav");
                 JOptionPane.showMessageDialog(null,
                         "El portal se abre con la gema maxima: " + maximo.getNombre(),
                         "Portal",
