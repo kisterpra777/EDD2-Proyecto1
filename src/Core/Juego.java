@@ -215,16 +215,14 @@ import Resources.Sonido;
                         "Portal",
                         JOptionPane.INFORMATION_MESSAGE);
                         arbol.eliminar(maximo.getPoder());
-                       // return true;
-
+              
+                        
 
             } else {
-                //System.out.println("El portal no se puede abrir. No hay gemas.");
                 JOptionPane.showMessageDialog(null,
                         "El portal no se puede abrir. No hay gemas.",
                         "Portal",
                         JOptionPane.WARNING_MESSAGE);
-              //  return false;
             }
             return maximo;
 
