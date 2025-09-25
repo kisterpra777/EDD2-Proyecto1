@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sonido {
+    //Clase creada para reproducir un sonido como un fx
     public static void reproducir(String ruta) {
         try {
             File archivo = new File(ruta); // ejemplo: "src/recursos/sonidos/gema.wav"

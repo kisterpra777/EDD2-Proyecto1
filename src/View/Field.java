@@ -147,6 +147,8 @@ public class Field extends javax.swing.JFrame {
         // Actualizamos la posición actual
         posicionActual = boton;
     }
+    
+    // Con este metodo se verifica si el jugador se puede mover a la casilla que undio
 
     private boolean esVecino(JButton nuevo, JButton actual) {
         int filaActual = -1, colActual = -1;
@@ -177,6 +179,7 @@ public class Field extends javax.swing.JFrame {
         int difFila = Math.abs(filaNuevo - filaActual);
         int difCol = Math.abs(colNuevo - colActual);
 
+        // Retorna si la nueva casilla esta a una diferencia de 1 de la posición del jugador
         return (difFila + difCol == 1);
     }
 
@@ -206,13 +209,15 @@ public class Field extends javax.swing.JFrame {
                     musicaJuego.detener();
                 }
                 // Marcar la casilla como "consumida" para que no vuelva a activarse:
-                //  - opcion A: deshabilitar el boton (sigue estando en grid)
+                //  Se deshabilita el boton (sigue estando en grid)
                 botonDestino.setEnabled(false);
             } else {
                 System.err.println("No se encontró la posición del botón en la malla (grid).");
             }
 
         } else {
+            //Retroalimentacion visual
+
             JOptionPane.showMessageDialog(null,
                     "No te puedes mover a esta casilla.",
                     "Movimiento",
@@ -221,6 +226,7 @@ public class Field extends javax.swing.JFrame {
 
     }
 
+    // Saber en que posicion del grid esta
     private int[] getGridPosition(JButton boton) {
         for (int f = 0; f < grid.length; f++) {
             for (int c = 0; c < grid[0].length; c++) {
@@ -655,6 +661,7 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_bprueba20ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       //Metodo para abrir el portal
         Nodo abierto = juego.abrirPortal();
         if (abierto != null) {
             

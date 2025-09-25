@@ -10,6 +10,7 @@ package Core;
  */
 public class Nodo {
 
+    //Clase nodo que representa a las gemas
     int poder;
     String nombre;
     int coordX;
@@ -19,12 +20,15 @@ public class Nodo {
     Nodo Ld;
     Nodo Lr;
 
+    
     public Nodo(int poder, String nombre, int coordX, int coordY) {
         this.poder = poder;
         this.nombre = nombre;
         this.coordX = coordX;
         this.coordY = coordY;
     }
+
+        //Submetodos basicos de Nodo
 
     public void setLi(Nodo Li) {
         this.Li = Li;
