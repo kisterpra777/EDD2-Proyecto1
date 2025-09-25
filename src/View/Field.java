@@ -11,6 +11,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +32,7 @@ public class Field extends javax.swing.JFrame {
     private int movimientosRestantes = 0;
     private JButton posicionActual; // el botón donde está el jugador
     private JButton[][] grid;
+    private Set<JButton> casillasVisitadas = new HashSet<>();
     MusicaFondo musicaJuego = new MusicaFondo();
     private int portales;
 
@@ -57,6 +60,7 @@ public class Field extends javax.swing.JFrame {
         portales = 0;
 
     }
+
     public Field(Juego juego, int portales) {
         setBackGround();
         initComponents();
@@ -147,9 +151,8 @@ public class Field extends javax.swing.JFrame {
         // Actualizamos la posición actual
         posicionActual = boton;
     }
-    
-    // Con este metodo se verifica si el jugador se puede mover a la casilla que undio
 
+    // Con este metodo se verifica si el jugador se puede mover a la casilla que undio
     private boolean esVecino(JButton nuevo, JButton actual) {
         int filaActual = -1, colActual = -1;
         int filaNuevo = -1, colNuevo = -1;
@@ -191,7 +194,6 @@ public class Field extends javax.swing.JFrame {
             movimientosRestantes--;
             System.out.println("Movimientos restantes: " + movimientosRestantes);
 
-            // Obtener indices del grid para pasar coordenadas al juego
             int[] pos = getGridPosition(botonDestino);
             int fila = pos[0];
             int col = pos[1];
@@ -200,30 +202,32 @@ public class Field extends javax.swing.JFrame {
                 int coordX = col * 100;
                 int coordY = fila * 100;
 
-                // Llamada al juego: dispara evento en esa casilla
-                Nodo nodo = juego.llamadaEvento(coordX, coordY);
-                if (nodo == null) {
-                    GameOver GO = new GameOver();
-                    GO.setVisible(true);
-                    dispose();
-                    musicaJuego.detener();
+                // Si nunca visitaste esta casilla, dispara evento
+                if (!casillasVisitadas.contains(botonDestino)) {
+                    Nodo nodo = juego.llamadaEvento(coordX, coordY);
+                    if (nodo == null) {
+                        GameOver GO = new GameOver();
+                        GO.setVisible(true);
+                        dispose();
+                        musicaJuego.detener();
+                    }
+
+                    // marcar como visitada
+                    casillasVisitadas.add(botonDestino);
+
+                    // quitar el icono como indicador visual
+                    botonDestino.setIcon(null);
                 }
-                // Marcar la casilla como "consumida" para que no vuelva a activarse:
-                //  Se deshabilita el boton (sigue estando en grid)
-                botonDestino.setEnabled(false);
             } else {
                 System.err.println("No se encontró la posición del botón en la malla (grid).");
             }
 
         } else {
-            //Retroalimentacion visual
-
             JOptionPane.showMessageDialog(null,
                     "No te puedes mover a esta casilla.",
                     "Movimiento",
                     JOptionPane.WARNING_MESSAGE);
         }
-
     }
 
     // Saber en que posicion del grid esta
@@ -661,17 +665,17 @@ public class Field extends javax.swing.JFrame {
     }//GEN-LAST:event_bprueba20ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       //Metodo para abrir el portal
+        //Metodo para abrir el portal
         Nodo abierto = juego.abrirPortal();
         if (abierto != null) {
-            
-            System.out.println("portales: "+portales);
+
+            System.out.println("portales: " + portales);
             this.dispose();
             if (portales < 2) {
                 musicaJuego.detener();
-                Field field = new Field(this.juego, portales+1);
+                Field field = new Field(this.juego, portales + 1);
                 field.setVisible(true);
-            }else{
+            } else {
                 dispose();
                 Congratulations congrats = new Congratulations();
                 congrats.setVisible(true);
